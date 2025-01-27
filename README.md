@@ -1,4 +1,4 @@
-# Hyper-V Machines
+# Hyper-V Manager
 
 PowerShell module that supports easier management of Hyper-V machines, especially create by Packer
 
@@ -6,9 +6,10 @@ PowerShell module that supports easier management of Hyper-V machines, especiall
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 $ExecutionContext.SessionState.LanguageMode
 
-Import-Module Hyper-V-Machine -Force -Verbose
+Import-Module Hyper-V-Manager -Force -Verbose
+Update-Help -Force
 
-Remove-Module Hyper-V-Machine -Force -ErrorAction SilentlyContinue
+Remove-Module Hyper-V-Manager -Force -ErrorAction SilentlyContinue
 $env:PSModulePath = [System.Environment]::GetEnvironmentVariable("PSModulePath","Machine")
-Invoke-HyperVMachine help
+Invoke-HyperVManager help
 ```
