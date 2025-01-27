@@ -103,7 +103,7 @@ function Invoke-HyperVManager {
 }
 
 function Show-Help {
-    Get-Help Invoke-HyperVMachine
+    Get-Help Invoke-HyperVManager
 }
 
 function Import-HVM {
