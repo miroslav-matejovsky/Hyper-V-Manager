@@ -1,3 +1,7 @@
 {
-  "recommendations": ["ms-vscode.powershell"]
+  "recommendations": [
+    "hashicorp.hcl",
+    "emeraldwalk.runonsave",
+    "ms-vscode.powershell"
+  ]
 }

@@ -1,3 +1,46 @@
 {
-  "cSpell.words": ["vmcx"]
+  "cSpell.words": [
+    "autounattend",
+    "cpus",
+    "HKLM",
+    "hyperv",
+    "marcinbojko",
+    "mkisofs",
+    "unattend",
+    "vmcx"
+  ],
+  "editor.renderWhitespace": "all",
+  "editor.renderControlCharacters": true,
+  "editor.tabSize": 2,
+  "github.copilot.enable": {
+    "plaintext": true,
+    "markdown": true
+  },
+  "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
+  "terminal.integrated.profiles.windows": {
+    "pwsh": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "fish": {
+      "path": "C:\\Cygwin64\\bin\\fish.exe",
+      "args": []
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "pwsh",
+  "powershell.startAutomatically": true,
+  "powershell.integratedConsole.showOnStartup": false,
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.pkr.hcl$",
+        "cmd": "packer fmt ${fileDirname}",
+        "autoShowOutputPanel": "never"
+      }
+    ]
+  },
+  "[xml]": {
+    // you don't want to auto format autounattend.xml because it iso will not work
+    "editor.formatOnSave": false
+  }
 }
