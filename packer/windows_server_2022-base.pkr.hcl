@@ -1,20 +1,21 @@
 # base image for Windows Server 2022 with applied updates and ssh enabled
 # this image takes longer to build due to the updates, so it is recommended to build this image first and then use it as a base for other images
 locals {
-  vm_name = "hvm_installer_windows_server_2022_base_${var.type}"
+  vm_name = "hvm_windows_server_2022_${var.type}"
 }
 
 variable "type" {
   type        = string
   description = "Type of Windows Server installation (desktop or core)"
-  default     = "core"
+  default     = "desktop"
+  # default     = "core"
   validation {
     condition     = contains(["desktop", "core"], var.type)
     error_message = "Type must be either 'desktop' or 'core'."
   }
 }
 
-# packer build -var 'type=desktop' windows_server_2022.pkr.hcl
+# packer build -var 'type=desktop' windows_server_2022-base.pkr.hcl
 
 source "hyperv-iso" "windows_server_2022" {
   vm_name          = local.vm_name
@@ -58,8 +59,8 @@ build {
     "source.hyperv-iso.windows_server_2022"
   ]
 
-  # provisioner "windows-update" {
-  # }
+  provisioner "windows-update" {
+  }
 
   provisioner "powershell" {
     script            = "./install/enable-ssh-server.ps1"
