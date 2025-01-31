@@ -6,6 +6,11 @@ function Invoke-HyperVManager {
     .Synopsis
     A command-based CLI for managing Hyper-V virtual machines. 
 
+    .Description
+    USAGE:
+        Invoke-HyperVManager -Command <command> -VmOutputFolder packer/output-<vm-name>
+        Invoke-HyperVManager <command> packer/output-<vm-name>
+
     .LINK
 
     https://kevinareed.com/2021/04/14/creating-a-command-based-cli-in-powershell/
