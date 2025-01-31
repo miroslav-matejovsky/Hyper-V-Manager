@@ -16,10 +16,21 @@ In `packer` directory you can find `windows_server_2022-base.pkr.hcl` file. This
 You can run it with `packer build  windows_server_2022-base.pkr.hcl`  or `packer build -var 'type=code' windows_server_2022-base.pkr.hcl` command.
 Base image should not be imported to Hyper-V Manager, it is used as a base for other images.
 
+```pwsh
+packer build windows_server_2022-base.pkr.hcl
+packer build -var 'type=code' windows_server_2022-base.pkr.hcl
+packer build -var 'type=desktop' windows_server_2022-base.pkr.hcl
+```
+
 ### Create example images
 
 In `packer` directory you can find `example-core.pkr.hcl` and `example-desktop.pkr.hcl` files. These files are used to create example images for Hyper-V.
 You can run it with `packer build  example-core.pkr.hcl`  or `packer build example-desktop.pkr.hcl` command.
+
+```pwsh
+packer build example-core.pkr.hcl
+packer build example-desktop.pkr.hcl
+```
 
 ## Import and start output images with Hyper-V Manager
 
