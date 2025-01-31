@@ -8,7 +8,7 @@ packer {
 }
 
 locals {
-  vm_name = "hvm_example_core"
+  vm_name = "hvm_example_desktop"
 }
 
 source "hyperv-vmcx" "td-installer-test" {
