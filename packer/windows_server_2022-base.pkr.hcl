@@ -15,7 +15,7 @@ variable "type" {
   }
 }
 
-# packer build -var 'type=code' windows_server_2022-base.pkr.hcl
+# packer build -var 'type=core' windows_server_2022-base.pkr.hcl
 
 source "hyperv-iso" "windows_server_2022" {
   vm_name          = local.vm_name
