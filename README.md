@@ -1,6 +1,7 @@
 # Hyper-V Manager
 
-PowerShell module that supports easier management of Hyper-V machines, especially machines created by Packer
+PowerShell module that supports easier management of [Hyper-V](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/hyper-v-overview?pivots=windows) machines,
+especially virtual machines created by [Packer](https://www.packer.io/)
 
 ## Installation
 
