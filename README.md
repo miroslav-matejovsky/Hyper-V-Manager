@@ -38,7 +38,12 @@ After creating images with Packer, you can import them to Hyper-V Manager with `
 
 ```pwsh
 Invoke-HyperVManager start output-hvm_example_core
+or
+Invoke-HyperVManager start ./packer/output-hvm_example_core
+
 Invoke-HyperVManager start output-hvm_example_desktop
+or
+Invoke-HyperVManager start ./packer/output-hvm_example_desktop
 ```
 
 ## Force import during development
