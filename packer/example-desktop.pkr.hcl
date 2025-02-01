@@ -17,15 +17,13 @@ source "hyperv-vmcx" "td-installer-test" {
 
   clone_from_vmcx_path = "base-hvm_windows_server_2022_desktop"
 
-  boot_command     = ["a<enter><wait>a<enter><wait>a<enter><wait>a<enter>"]
-  boot_wait        = "1s"
-  shutdown_command = "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
+  headless         = false
+  shutdown_command = "shutdown /s /t 1 /f /d p:4:1 /c \"Packer Shutdown\""
 
   cpus                             = 2
   memory                           = 4096
   enable_dynamic_memory            = true
   switch_name                      = "Default Switch"
-  headless                         = false
   generation                       = 2
   enable_secure_boot               = false
   enable_virtualization_extensions = false
