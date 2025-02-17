@@ -8,6 +8,7 @@
     "marcinbojko",
     "mkisofs",
     "unattend",
+    "vhdx",
     "vmcx"
   ],
   "editor.renderWhitespace": "all",

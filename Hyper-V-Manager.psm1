@@ -74,20 +74,39 @@ function Invoke-HyperVManager {
 
     $vmName = $outputVmName -replace '^output-', ''
 
-    Write-Output "VM folder: $VmOutputFolder"
-    Write-Output "VM name: $vmName"
+    Write-Host "VM folder: $VmOutputFolder"
+    Write-Host "VM name: $vmName"
 
     switch ($Command) {
-        "import" { Import-HVM -VmName $vmName -VmOutputFolder $VmOutputFolder }
-        "start" { Start-HVM -VmName $vmName -VmOutputFolder $VmOutputFolder }
+        "import" { 
+            Import-HVM -VmName $vmName -VmOutputFolder $VmOutputFolder
+            return $vmName
+        }
+        "start" { 
+            Start-HVM -VmName $vmName -VmOutputFolder $VmOutputFolder 
+            return $vmName
+        }
         "session" { 
             $credential = New-Object System.Management.Automation.PSCredential ("Administrator", (ConvertTo-SecureString "password" -AsPlainText -Force))
             Enter-PSSession -VMName $vmName -Credential $credential
         }
         "ip" {
-            $ip = Get-IP -vmName $vmName
+            $ip = ""
+            for ($i = 5; $i -gt 0; $i--) {
+                $ip = Get-IP -vmName $vmName
+                if ($ip) {
+                    break
+                }
+                Write-Host "Waiting for IP address... $i"
+                Start-Sleep -Seconds 1
+            }
+            if (-not $ip) {
+                Write-Error "Unable to get IP address for VM: $vmName"
+                return
+            }
             Set-Clipboard -Value $ip
-            Write-Output $ip
+            Write-Host "IP: $ip"
+            return $ip
         }
         "ssh" {
             $ip = Get-IP -vmName $vmName
@@ -96,7 +115,7 @@ function Invoke-HyperVManager {
         }
         "stop" {
             Stop-VM -Name $vmName
-            Write-Output "VM '$vmName' stopped."
+            Write-Host "VM '$vmName' stopped."
         }
         "remove" { Remove-HVM -VmName $vmName }
         "delete" { Remove-HVMData -VmName $vmName -VmOutputFolder $VmOutputFolder }
@@ -191,15 +210,15 @@ function Start-HVM {
 
     if ($vm.State -ne 'Running') {
         Start-VM -Name $VmName
-        Write-Output "VM '$VmName' started."
+        Write-Host "VM '$VmName' started."
     }
     else {
-        Write-Output "VM '$VmName' is already running."
+        Write-Host "VM '$VmName' is already running."
     }
 
     $ip = Get-IP -vmName $VmName
     Set-Clipboard -Value $ip
-    Write-Output $ip
+    Write-Host $ip
 }
 
 function Remove-HVM {
@@ -211,17 +230,17 @@ function Remove-HVM {
     $vm = Get-VM -Name $VmName -ErrorAction SilentlyContinue
 
     if ($null -eq $vm) {
-        Write-Output "No VM found with the name '$VmName'."
+        Write-Host "No VM found with the name '$VmName'."
         return
     }
 
     if ($vm.State -eq 'Running') {
         Stop-VM -Name $VmName -Force
-        Write-Output "VM '$VmName' stopped."
+        Write-Host "VM '$VmName' stopped."
     }
 
     Remove-VM -Name $VmName -Force
-    Write-Output "VM '$VmName' removed."
+    Write-Host "VM '$VmName' removed."
 }
 
 function Remove-HVMData {
@@ -237,7 +256,7 @@ function Remove-HVMData {
 
     Remove-Item -Recurse -Force $VmOutputFolder
 
-    Write-Output "Folder $VmOutputFolder deleted."
+    Write-Host-Output "Folder $VmOutputFolder deleted."
 }
 
 function Get-Vms {
@@ -258,6 +277,7 @@ function Get-IP {
         [Parameter(Position = 0, Mandatory = $true)]
         [string]$vmName
     )
+    Write-Host "Getting IP address for VM: $vmName"
     $vm = Get-VM -Name $vmName
     $ip = $vm | Select-Object -ExpandProperty NetworkAdapters | 
     Select-Object VmName, MacAddress, SwitchName, @{Name = "IPv4Addresses"; Expression = { $_.IPAddresses -match "^\d{1,3}(\.\d{1,3}){3}$" } }
