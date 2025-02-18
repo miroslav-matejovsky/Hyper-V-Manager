@@ -285,5 +285,4 @@ function Get-IP {
     return $ip
 }
 
-# Export the function to make it available when module is imported
-Export-ModuleMember -Function Invoke-HyperVManager
+Export-ModuleMember -Function Invoke-HyperVManager, Get-IP
